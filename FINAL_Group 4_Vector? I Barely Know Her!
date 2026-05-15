@@ -1,0 +1,108 @@
+---
+title: 'Group 4: Vector? I Barely Know Her!'
+author: "Annie Tan"
+date: "2026-04-29"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+Processing the CVS file and visualizing the dataset
+```{r}
+data<-read.csv("Group4_data.csv", header=T)
+str(data)
+head(data)
+```
+A Generalized Linear Mixed Models (GLMMs) "are used to model complex data sets that are non-normal, non-linear, and clustered or longitudinal."
+```{r}
+#for larva
+library(glmmTMB)
+model<-glmmTMB(IpacL~Habitat, family=nbinom2(), data=data)
+summary(model)
+```
+
+```{r}
+#for nymph
+library(glmmTMB)
+model<-glmmTMB(IpacN~Habitat, family=nbinom2(), data=data)
+summary(model)
+```
+
+```{r}
+#for adult
+library(glmmTMB)
+model<-glmmTMB(IpacA~Habitat, family=nbinom2(), data=data)
+summary(model)
+```
+
+
+```{r}
+#box plot for larva
+library(ggplot2)
+p1=boxplot(IpacL~ Habitat, data=data, main="IpacL", ylab="Number of Larva")
+```
+
+```{r}
+#box plot for nymph
+library(ggplot2)
+p2=boxplot(IpacN~ Habitat, data=data, main="IpacN", ylab="Number of Larva")
+```
+
+```{r}
+#box plot for adult
+library(ggplot2)
+p3=boxplot(IpacA~ Habitat, data=data, main="IpacA", ylab="Number of Larva")
+```
+
+```{r}
+summary(data)
+```
+
+
+```{r}
+group4_tick_data <- read.csv("Group4_Tick_data.csv", header=T)
+
+hist(group4_tick_data$IpacJuv, breaks=10)
+
+
+```
+
+
+```{r}
+tick_data2 <- read.csv("tick_data2.csv")
+```
+
+
+```{r}
+tick_data1 <- read.csv("tick_data1.csv")
+```
+
+
+```{r}
+#download.packages(glmmTMB)
+library(glmmTMB)
+glm_total <- glmmTMB(TickTotal~habitat, family=nbinom2(), data=tick_data1)
+summary(glm_total)
+
+
+library(ggplot2)
+ggplot(tick_data1, aes(x = factor(habitat), y = TickTotal)) +
+  geom_boxplot(fill = "lightblue")
+```
+
+
+```{r}
+
+ggplot(tick_data2, aes(x= Life.stage, fill = Habitat,)) +
+  labs(x = "Life Stage", y = "Tick Number") +
+  geom_bar(position = "dodge") + scale_fill_manual(values = c("Oak" = "sandybrown", "Redwood" = "forestgreen"))
+
+```
+
+
+```{r}
+library(glmmTMB)
+model<-glmmTMB(TickTotal~habitat, family=nbinom2(), data=tick_data1)
+summary(model)
+```
+
