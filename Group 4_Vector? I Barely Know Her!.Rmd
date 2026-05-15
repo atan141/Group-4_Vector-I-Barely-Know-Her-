@@ -1,0 +1,62 @@
+---
+title: 'Group 4: Vector? I Barely Know Her!'
+author: "Annie Tan"
+date: "2026-04-29"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+Processing the CVS file and visualizing the dataset
+```{r}
+data<-read.csv("Group4_data.csv", header=T)
+str(data)
+head(data)
+```
+A Generalized Linear Mixed Models (GLMMs) "are used to model complex data sets that are non-normal, non-linear, and clustered or longitudinal."
+```{r}
+#for larva
+library(glmmTMB)
+model<-glmmTMB(IpacL~Habitat, family=nbinom2(), data=data)
+summary(model)
+```
+
+```{r}
+#for nymph
+library(glmmTMB)
+model<-glmmTMB(IpacN~Habitat, family=nbinom2(), data=data)
+summary(model)
+```
+
+```{r}
+#for adult
+library(glmmTMB)
+model<-glmmTMB(IpacA~Habitat, family=nbinom2(), data=data)
+summary(model)
+```
+
+
+```{r}
+#box plot for larva
+library(ggplot2)
+p1=boxplot(IpacL~ Habitat, data=data, main="IpacL", ylab="Number of Larva")
+```
+
+```{r}
+#box plot for nymph
+library(ggplot2)
+p2=boxplot(IpacN~ Habitat, data=data, main="IpacN", ylab="Number of Larva")
+```
+
+```{r}
+#box plot for adult
+library(ggplot2)
+p3=boxplot(IpacA~ Habitat, data=data, main="IpacA", ylab="Number of Larva")
+```
+
+```{r}
+summary(data)
+```
+
+
+
